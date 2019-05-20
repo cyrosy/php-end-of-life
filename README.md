@@ -1,5 +1,7 @@
 # PHP End Of Life
 
+[![CircleCI](https://circleci.com/gh/cyrosy/php-end-of-life.svg?style=svg)](https://circleci.com/gh/cyrosy/php-end-of-life)
+
 Expose PHP end of life date, allowing you to check if your version is supported.
 
 ## Installation

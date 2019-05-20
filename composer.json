@@ -3,6 +3,7 @@
   "description": "Library exposing EOL dates of PHP versions",
   "license": "EUPL-1.2",
   "type": "library",
+  "version": "1.0.0",
   "authors": [
     {
       "name": "Cyril SAINT-YVES",
