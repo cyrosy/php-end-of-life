@@ -1,0 +1,162 @@
+version: 2
+
+jobs:
+  # Test on latest PHP version
+  build:
+    docker:
+      - image: circleci/php:7.3-cli
+    working_directory: ~/php-eol
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-composer-{{ checksum "composer.json" }}
+            - v1-composer-
+      - run: composer install -n --prefer-dist
+      - save_cache:
+          key: v1-composer-{{ checksum "composer.json" }}
+          paths:
+            - vendor
+      - run: ./vendor/bin/phpunit --log-junit ~/phpunit/junit.xml
+      - store_test_results:
+          path: ~/phpunit
+      - store_artifacts:
+          path: ~/phpunit
+
+  test-7.2:
+    docker:
+      - image: circleci/php:7.2-cli
+    working_directory: ~/php-eol
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-composer-{{ checksum "composer.json" }}
+            - v1-composer-
+      - run: composer install -n --prefer-dist
+      - save_cache:
+          key: v1-composer-{{ checksum "composer.json" }}
+          paths:
+            - vendor
+      - run: ./vendor/bin/phpunit --log-junit ~/phpunit/junit.xml
+      - store_test_results:
+          path: ~/phpunit
+      - store_artifacts:
+          path: ~/phpunit
+
+  test-7.1:
+    docker:
+      - image: circleci/php:7.1-cli
+    working_directory: ~/php-eol
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-composer-{{ checksum "composer.json" }}
+            - v1-composer-
+      - run: composer install -n --prefer-dist
+      - save_cache:
+          key: v1-composer-{{ checksum "composer.json" }}
+          paths:
+            - vendor
+      - run: ./vendor/bin/phpunit --log-junit ~/phpunit/junit.xml
+      - store_test_results:
+          path: ~/phpunit
+      - store_artifacts:
+          path: ~/phpunit
+
+  test-7.0:
+    docker:
+      - image: circleci/php:7.0-cli
+    working_directory: ~/php-eol
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-composer-{{ checksum "composer.json" }}
+            - v1-composer-
+      - run: composer install -n --prefer-dist
+      - save_cache:
+          key: v1-composer-{{ checksum "composer.json" }}
+          paths:
+            - vendor
+      - run: ./vendor/bin/phpunit --config phpunit-compat.xml --log-junit ~/phpunit/junit.xml
+      - store_test_results:
+          path: ~/phpunit
+      - store_artifacts:
+          path: ~/phpunit
+
+  test-5.6:
+    docker:
+      - image: circleci/php:5.6-cli
+    working_directory: ~/php-eol
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-composer-{{ checksum "composer.json" }}
+            - v1-composer-
+      - run: composer install -n --prefer-dist
+      - save_cache:
+          key: v1-composer-{{ checksum "composer.json" }}
+          paths:
+            - vendor
+      - run: ./vendor/bin/phpunit --config phpunit-compat.xml --log-junit ~/phpunit/junit.xml
+      - store_test_results:
+          path: ~/phpunit
+      - store_artifacts:
+          path: ~/phpunit
+
+  test-5.5:
+    docker:
+      - image: cyrosy/circleci-php:5.5-cli
+    working_directory: ~/php-eol
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-composer-{{ checksum "composer.json" }}
+            - v1-composer-
+      - run: composer install -n --prefer-dist
+      - save_cache:
+          key: v1-composer-{{ checksum "composer.json" }}
+          paths:
+            - vendor
+      - run: ./vendor/bin/phpunit --config phpunit-compat.xml --log-junit ~/phpunit/junit.xml
+      - store_test_results:
+          path: ~/phpunit
+      - store_artifacts:
+          path: ~/phpunit
+
+  test-5.4:
+    docker:
+      - image: cyrosy/circleci-php:5.4-cli
+    working_directory: ~/php-eol
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-composer-{{ checksum "composer.json" }}
+            - v1-composer-
+      - run: composer install -n --prefer-dist
+      - save_cache:
+          key: v1-composer-{{ checksum "composer.json" }}
+          paths:
+            - vendor
+      - run: ./vendor/bin/phpunit --config phpunit-compat.xml --log-junit ~/phpunit/junit.xml
+      - store_test_results:
+          path: ~/phpunit
+      - store_artifacts:
+          path: ~/phpunit
+
+workflows:
+  version: 2
+  test_php_versions:
+    jobs:
+      - build
+      - test-7.2
+      - test-7.1
+      - test-7.0
+      - test-5.6
+      - test-5.5
+      - test-5.4
