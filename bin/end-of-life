@@ -1,6 +1,22 @@
 #!/usr/bin/env php
 <?php
 
+/*
+ * PHP End of Life CLI
+ * Expose PHP EOL Date and Check if Version is Supported
+ *
+ * Usage:
+ *   end-of-life
+ *   end-of-life 1.0.0
+ *   end-of-life help
+ *
+ * Return:
+ *     0 Success
+ *     1 Unsupported Version
+ *     2 Invalid Arguments
+ *   254 Unknown Autoload Location
+ */
+
 use Cyrosy\PhpEndOfLife\PhpEndOfLife;
 
 $locations = [
@@ -19,7 +35,7 @@ foreach ($locations as $location) {
 }
 
 if (! $loaded) {
-    fwrite(STDERR, 'Unknown Autoload File Location');
+    fwrite(STDERR, 'Unknown Autoload Location');
     exit(254);
 }
 
@@ -27,7 +43,7 @@ function printPhpEndOfLifeHelp($command)
 {
     fwrite(STDERR,
         "PHP End of Life\n"
-        . "Expose PHP EOL Life Date and Check if Version is Supported\n\n"
+        . "Expose PHP EOL Date and Check if Version is Supported\n\n"
         . "Usage:\n"
         . ' ' . $command . "\n"
         . ' ' . $command . " 1.0.0\n"
@@ -54,7 +70,8 @@ $version = phpversion();
 
 if ($argc === 2) {
     if ($argv[1] === 'help') {
-        exit(printPhpEndOfLifeHelp($argv[0]));
+        printPhpEndOfLifeHelp($argv[0]);
+        exit(0);
     }
 
     $version = $argv[1];
@@ -62,9 +79,11 @@ if ($argc === 2) {
 
 try {
     if (! PhpEndOfLife::isSupported($version)) {
-        // Not Supported!
+        // Unsupported
         exit(1);
     }
+    // Success!
+    exit(0);
 } catch (Exception $e) {
     exit(printPhpEndOfLifeError($e));
 }
