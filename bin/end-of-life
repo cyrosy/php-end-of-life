@@ -23,6 +23,19 @@ if (! $loaded) {
     exit(254);
 }
 
-if (! PhpEndOfLife::isSupported(PHP_VERSION)) {
+$version = phpversion();
+
+if ($argc > 2) {
+    fwrite(STDERR,
+        "PHP End of Life\n"
+        . "Expose PHP EOL Life Date and Check if Version is Supported\n\n"
+        . "Usage:\n"
+        . ' ' . $argv[0] . "\n"
+        . ' ' . $argv[0] . " 1.0.0\n"
+        . ' ' . $argv[0] . " help\n"
+    );
+}
+
+if (! PhpEndOfLife::isSupported($version)) {
     exit(1);
 }
