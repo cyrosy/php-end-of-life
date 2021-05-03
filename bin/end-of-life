@@ -1,0 +1,10 @@
+#!/usr/bin/env php
+<?php
+
+use Cyrosy\PhpEndOfLife\PhpEndOfLife;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+if (! PhpEndOfLife::isSupported(PHP_VERSION)) {
+    exit(1);
+}
