@@ -23,17 +23,34 @@ if (! $loaded) {
     exit(254);
 }
 
-$version = phpversion();
-
-if ($argc > 2) {
+function printPhpEndOfLifeHelp($command)
+{
     fwrite(STDERR,
         "PHP End of Life\n"
         . "Expose PHP EOL Life Date and Check if Version is Supported\n\n"
         . "Usage:\n"
-        . ' ' . $argv[0] . "\n"
-        . ' ' . $argv[0] . " 1.0.0\n"
-        . ' ' . $argv[0] . " help\n"
+        . ' ' . $command . "\n"
+        . ' ' . $command . " 1.0.0\n"
+        . ' ' . $command . " help\n"
     );
+
+    return 2;
+}
+
+$version = phpversion();
+
+if ($argc > 2) {
+    exit(printPhpEndOfLifeHelp($argv[0]));
+}
+
+$version = phpversion();
+
+if ($argc === 2) {
+    if ($argv[1] === 'help') {
+        exit(printPhpEndOfLifeHelp($argv[0]));
+    }
+
+    $version = $argv[1];
 }
 
 if (! PhpEndOfLife::isSupported($version)) {
