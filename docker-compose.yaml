@@ -6,3 +6,5 @@ services:
       context: .
       args:
         PHP_VERSION: ${PHP_VERSION}
+    volumes:
+    - '.:/app'

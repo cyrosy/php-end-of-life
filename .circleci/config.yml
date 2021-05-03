@@ -4,17 +4,17 @@ jobs:
   # Test on latest PHP version
   build:
     docker:
-      - image: circleci/php:7.4-cli
+      - image: circleci/php:8.0-cli
     working_directory: ~/php-eol
     steps:
       - checkout
       - restore_cache:
           keys:
-            - v1-composer-{{ checksum "composer.json" }}
-            - v1-composer-
+            - v1-composer-8.0-{{ checksum "composer.json" }}
+            - v1-composer-8.0-
       - run: composer install -n --prefer-dist
       - save_cache:
-          key: v1-composer-{{ checksum "composer.json" }}
+          key: v1-composer-8.0-{{ checksum "composer.json" }}
           paths:
             - vendor
       - run: ./vendor/bin/phpunit --log-junit ~/phpunit/junit.xml
@@ -22,7 +22,28 @@ jobs:
           path: ~/phpunit
       - store_artifacts:
           path: ~/phpunit
-          
+
+  test-7.4:
+    docker:
+      - image: circleci/php:7.4-cli
+    working_directory: ~/php-eol
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-composer-7.4-{{ checksum "composer.json" }}
+            - v1-composer-7.4-
+      - run: composer install -n --prefer-dist
+      - save_cache:
+          key: v1-composer-7.4-{{ checksum "composer.json" }}
+          paths:
+            - vendor
+      - run: ./vendor/bin/phpunit --log-junit ~/phpunit/junit.xml
+      - store_test_results:
+          path: ~/phpunit
+      - store_artifacts:
+          path: ~/phpunit
+
   test-7.3:
     docker:
       - image: circleci/php:7.3-cli
@@ -31,11 +52,11 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-composer-{{ checksum "composer.json" }}
-            - v1-composer-
+            - v1-composer-7.3-{{ checksum "composer.json" }}
+            - v1-composer-7.3-
       - run: composer install -n --prefer-dist
       - save_cache:
-          key: v1-composer-{{ checksum "composer.json" }}
+          key: v1-composer-7.3-{{ checksum "composer.json" }}
           paths:
             - vendor
       - run: ./vendor/bin/phpunit --log-junit ~/phpunit/junit.xml
@@ -52,11 +73,11 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-composer-{{ checksum "composer.json" }}
-            - v1-composer-
+            - v1-composer-7.2-{{ checksum "composer.json" }}
+            - v1-composer-7.2-
       - run: composer install -n --prefer-dist
       - save_cache:
-          key: v1-composer-{{ checksum "composer.json" }}
+          key: v1-composer-7.2-{{ checksum "composer.json" }}
           paths:
             - vendor
       - run: ./vendor/bin/phpunit --log-junit ~/phpunit/junit.xml
@@ -73,11 +94,11 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-composer-{{ checksum "composer.json" }}
-            - v1-composer-
+            - v1-composer-7.1-{{ checksum "composer.json" }}
+            - v1-composer-7.1-
       - run: composer install -n --prefer-dist
       - save_cache:
-          key: v1-composer-{{ checksum "composer.json" }}
+          key: v1-composer-7.1-{{ checksum "composer.json" }}
           paths:
             - vendor
       - run: ./vendor/bin/phpunit --log-junit ~/phpunit/junit.xml
@@ -94,11 +115,11 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-composer-{{ checksum "composer.json" }}
-            - v1-composer-
+            - v1-composer-7.0-{{ checksum "composer.json" }}
+            - v1-composer-7.0-
       - run: composer install -n --prefer-dist
       - save_cache:
-          key: v1-composer-{{ checksum "composer.json" }}
+          key: v1-composer-7.0-{{ checksum "composer.json" }}
           paths:
             - vendor
       - run: ./vendor/bin/phpunit --config phpunit-compat.xml --log-junit ~/phpunit/junit.xml
@@ -115,11 +136,11 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-composer-{{ checksum "composer.json" }}
-            - v1-composer-
+            - v1-composer-5.6-{{ checksum "composer.json" }}
+            - v1-composer-5.6-
       - run: composer install -n --prefer-dist
       - save_cache:
-          key: v1-composer-{{ checksum "composer.json" }}
+          key: v1-composer-5.6-{{ checksum "composer.json" }}
           paths:
             - vendor
       - run: ./vendor/bin/phpunit --config phpunit-compat.xml --log-junit ~/phpunit/junit.xml
@@ -136,11 +157,11 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-composer-{{ checksum "composer.json" }}
-            - v1-composer-
+            - v1-composer-5.5-{{ checksum "composer.json" }}
+            - v1-composer-5.5-
       - run: composer install -n --prefer-dist
       - save_cache:
-          key: v1-composer-{{ checksum "composer.json" }}
+          key: v1-composer-5.5-{{ checksum "composer.json" }}
           paths:
             - vendor
       - run: ./vendor/bin/phpunit --config phpunit-compat.xml --log-junit ~/phpunit/junit.xml
@@ -157,11 +178,11 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-composer-{{ checksum "composer.json" }}
-            - v1-composer-
+            - v1-composer-5.4-{{ checksum "composer.json" }}
+            - v1-composer-5.4-
       - run: composer install -n --prefer-dist
       - save_cache:
-          key: v1-composer-{{ checksum "composer.json" }}
+          key: v1-composer-5.4-{{ checksum "composer.json" }}
           paths:
             - vendor
       - run: ./vendor/bin/phpunit --config phpunit-compat.xml --log-junit ~/phpunit/junit.xml
@@ -175,6 +196,7 @@ workflows:
   test_php_versions:
     jobs:
       - build
+      - test-7.4
       - test-7.3
       - test-7.2
       - test-7.1
