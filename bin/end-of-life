@@ -37,6 +37,13 @@ function printPhpEndOfLifeHelp($command)
     return 2;
 }
 
+function printPhpEndOfLifeError($exception)
+{
+    fwrite(STDERR, $exception->getMessage() . "\n");
+
+    return 2;
+}
+
 $version = phpversion();
 
 if ($argc > 2) {
@@ -53,6 +60,11 @@ if ($argc === 2) {
     $version = $argv[1];
 }
 
-if (! PhpEndOfLife::isSupported($version)) {
-    exit(1);
+try {
+    if (! PhpEndOfLife::isSupported($version)) {
+        // Not Supported!
+        exit(1);
+    }
+} catch (Exception $e) {
+    exit(printPhpEndOfLifeError($e));
 }
