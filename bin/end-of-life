@@ -39,14 +39,14 @@ if (! $loaded) {
     exit(254);
 }
 
-function printPhpEndOfLifeHelp($command)
+function printPhpEndOfLifeHelp($command, $version)
 {
     fwrite(STDERR,
         "PHP End of Life\n"
         . "Expose PHP EOL Date and Check if Version is Supported\n\n"
         . "Usage:\n"
         . ' ' . $command . "\n"
-        . ' ' . $command . " 1.0.0\n"
+        . ' ' . $command . ' ' . $version . "\n"
         . ' ' . $command . " help\n"
     );
 
@@ -63,14 +63,12 @@ function printPhpEndOfLifeError($exception)
 $version = phpversion();
 
 if ($argc > 2) {
-    exit(printPhpEndOfLifeHelp($argv[0]));
+    exit(printPhpEndOfLifeHelp($argv[0], $version));
 }
-
-$version = phpversion();
 
 if ($argc === 2) {
     if ($argv[1] === 'help') {
-        printPhpEndOfLifeHelp($argv[0]);
+        printPhpEndOfLifeHelp($argv[0], $version);
         exit(0);
     }
 
