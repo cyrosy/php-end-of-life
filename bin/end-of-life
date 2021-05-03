@@ -3,7 +3,25 @@
 
 use Cyrosy\PhpEndOfLife\PhpEndOfLife;
 
-require __DIR__ . '/../vendor/autoload.php';
+$locations = [
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/../../vendor/autoload.php',
+];
+
+$loaded = false;
+
+foreach ($locations as $location) {
+    if (is_file($location)) {
+        require_once($location);
+        $loaded = true;
+        break;
+    }
+}
+
+if (! $loaded) {
+    fwrite(STDERR, 'Unknown Autoload File Location');
+    exit(254);
+}
 
 if (! PhpEndOfLife::isSupported(PHP_VERSION)) {
     exit(1);
