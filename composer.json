@@ -16,8 +16,10 @@
     }
   },
   "autoload-dev": {
-    "Cyrosy\\PhpEndOfLife\\Test": "tests",
-    "Cyrosy\\PhpEndOfLife\\TestCompat": "tests-compat"
+    "psr-4": {
+      "Cyrosy\\PhpEndOfLife\\Test\\": "tests",
+      "Cyrosy\\PhpEndOfLife\\TestCompat\\": "tests-compat"
+    }
   },
   "require": {
     "php": "^5.3.3|^7.0|^8.0",
