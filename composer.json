@@ -28,6 +28,9 @@
   "require-dev": {
     "phpunit/phpunit": "*"
   },
+  "bin": [
+    "bin/end-of-life"
+  ],
   "config": {
     "sort-packages": true
   }
