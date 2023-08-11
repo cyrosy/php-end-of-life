@@ -1,5 +1,3 @@
-version: '3.4'
-
 services:
   php:
     build:
@@ -7,4 +5,130 @@ services:
       args:
         PHP_VERSION: ${PHP_VERSION}
     volumes:
-    - '.:/app'
+    - ".:/app"
+
+  php5.5:
+    build:
+      context: .
+      args:
+        COMPOSER_NOTLS: true
+        COMPOSER_VERSION: 2.2
+        PHP_VERSION: 5.5
+        PHPUNIT_CONF: phpunit-compat.xml
+    profiles:
+    - all
+    - php5.5
+    volumes:
+    - ".:/app"
+
+  php5.6:
+    build:
+      context: .
+      args:
+        COMPOSER_NOTLS: true
+        COMPOSER_VERSION: 2.2
+        PHP_VERSION: 5.6
+        PHPUNIT_CONF: phpunit-compat.xml
+    profiles:
+    - all
+    - php5.6
+    volumes:
+    - ".:/app"
+
+  php7.0:
+    build:
+      context: .
+      args:
+        COMPOSER_VERSION: 2.2
+        PHP_VERSION: 7.0
+        PHPUNIT_CONF: phpunit-compat.xml
+    profiles:
+    - all
+    - php7.0
+    volumes:
+    - ".:/app"
+
+  php7.1:
+    build:
+      context: .
+      args:
+        COMPOSER_VERSION: 2.2
+        PHP_VERSION: 7.1
+        PHPUNIT_CONF: phpunit-compat.xml
+    profiles:
+    - all
+    - php7.1
+    volumes:
+    - ".:/app"
+
+  php7.2:
+    build:
+      context: .
+      args:
+        COMPOSER_VERSION: 2
+        PHP_VERSION: 7.2
+    profiles:
+    - all
+    - php7.2
+    volumes:
+    - ".:/app"
+
+  php7.3:
+    build:
+      context: .
+      args:
+        COMPOSER_VERSION: 2
+        PHP_VERSION: 7.3
+    profiles:
+    - all
+    - php7.3
+    volumes:
+    - ".:/app"
+
+  php7.4:
+    build:
+      context: .
+      args:
+        COMPOSER_VERSION: 2
+        PHP_VERSION: 7.4
+    profiles:
+    - all
+    - php7.4
+    volumes:
+    - ".:/app"
+
+  php8.0:
+    build:
+      context: .
+      args:
+        COMPOSER_VERSION: 2
+        PHP_VERSION: 8.0
+    profiles:
+    - all
+    - php8.0
+    volumes:
+    - ".:/app"
+
+  php8.1:
+    build:
+      context: .
+      args:
+        COMPOSER_VERSION: 2
+        PHP_VERSION: 8.1
+    profiles:
+    - all
+    - php8.1
+    volumes:
+    - ".:/app"
+
+  php8.2:
+    build:
+      context: .
+      args:
+        COMPOSER_VERSION: 2
+        PHP_VERSION: 8.2
+    profiles:
+    - all
+    - php8.2
+    volumes:
+    - ".:/app"

@@ -51,6 +51,7 @@ final class PhpEndOfLifeTest extends TestCase
     {
         $this->assertTrue(PhpEndOfLife::isSupported('7.0', new \DateTime('2019-01-01')));
         $this->assertFalse(PhpEndOfLife::isSupported('7.0', new \DateTime('2019-02-01')));
-        $this->assertTrue(PhpEndOfLife::isSupported('8.0'));
+        $this->assertTrue(PhpEndOfLife::isSupported('8.2'));
+        $this->assertFalse(PhpEndOfLife::isSupported('5.6'));
     }
 }

@@ -1,8 +1,49 @@
 version: 2
 
 jobs:
-  # Test on latest PHP version
-  build:
+  test-8.2:
+    docker:
+      - image: circleci/php:8.2-cli
+    working_directory: ~/php-eol
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-composer-8.2-{{ checksum "composer.json" }}
+            - v1-composer-8.2-
+      - run: composer install -n --prefer-dist
+      - save_cache:
+          key: v1-composer-8.2-{{ checksum "composer.json" }}
+          paths:
+            - vendor
+      - run: ./vendor/bin/phpunit --log-junit ~/phpunit/junit.xml
+      - store_test_results:
+          path: ~/phpunit
+      - store_artifacts:
+          path: ~/phpunit
+
+  test-8.1:
+    docker:
+      - image: circleci/php:8.1-cli
+    working_directory: ~/php-eol
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-composer-8.1-{{ checksum "composer.json" }}
+            - v1-composer-8.1-
+      - run: composer install -n --prefer-dist
+      - save_cache:
+          key: v1-composer-8.1-{{ checksum "composer.json" }}
+          paths:
+            - vendor
+      - run: ./vendor/bin/phpunit --log-junit ~/phpunit/junit.xml
+      - store_test_results:
+          path: ~/phpunit
+      - store_artifacts:
+          path: ~/phpunit
+
+  test-8.0:
     docker:
       - image: circleci/php:8.0-cli
     working_directory: ~/php-eol
@@ -195,7 +236,9 @@ workflows:
   version: 2
   test_php_versions:
     jobs:
-      - build
+      - test-8.2
+      - test-8.1
+      - test-8.0
       - test-7.4
       - test-7.3
       - test-7.2
